@@ -1,0 +1,86 @@
+package lab4;
+public class Main {
+    public static void main(String[] args){
+        Child hero1 = new Child("Малыш", 10);
+        FairytaleCharacter hero2 = new FairytaleCharacter("Карлсон", 34);
+        Adult hero3 = new Adult("безымянный герой");
+        hero3.setChildren(hero1);
+        Territory territory = new Territory(Area.CITY, "Стокгольм", hero1, hero2);
+        territory.addWaterObject(TypeOfWaterObject.BAY);
+        territory.getTwilight().startTwilight();
+        territory.getSky().glow();
+        Time time = new Time(Months.JUNE, Day.EVENING);
+        House houseOfHero1 = new House("дом Малыша");
+        House.Floor floor1 = houseOfHero1.new Floor("пол");
+        House.Roof roof1 = houseOfHero1.new Roof("крыша");
+        House.Room kitchen = houseOfHero1.new Room("кухня в доме Малыша");
+        Place place1 = new Place(territory, houseOfHero1);
+        hero1.setLocation(place1);
+        Place place2 = new Place(territory);
+        hero2.setLocation(place2);
+        hero1.sneak(kitchen.getName());
+        House houseOfHero2 = new House("дом Карлсона");
+        House.Floor floor2 = houseOfHero2.new Floor("пол");
+        House.Roof roof2 = houseOfHero2.new Roof("крыша");
+        House.Room room = houseOfHero2.new Room("комната");
+        House.Porch porch = houseOfHero2.new Porch("крылечко");
+        House.Walls walls = houseOfHero2.new Walls("стены");
+        FoodAndDrinks food1 =  new FoodAndDrinks (Meal.FOOD.getMeal() + " (1 вид)", "мама человека по имени " + hero1.getName());
+        FoodAndDrinks food2 = new FoodAndDrinks (Meal.FOOD.getMeal() + " (2 вид)", "мама человека по имени " + hero1.getName());
+        hero1.take(food1);
+        hero1.returnFromSomePlace();
+        House someHouse = new House("какой-то дом");
+        House.Floor floor3 = someHouse.new Floor("пол");
+        House.Roof roof3 = someHouse.new Roof("крыша");
+        hero3.allow(0, TypeOfAction.GIVE, food1.getInformation(), hero2, "в случае необходимости");
+        hero1.reactionToThePermission(0, true);
+        hero3.prohibit(0, TypeOfAction.FLY, roof3.getName(), hero2, "всегда");
+        hero1.forgetInstruction(0, false);
+        hero1.reactionToTheProhibition(0, true);
+        ReminderFromSomeone reminderFromSomeone = new ReminderFromSomeone(hero1.getProhibition(0));
+        hero1.beSurprisedIf(reminderFromSomeone, TypeOfAmazement.SINCERELY);
+        Habit habit = new Habit(TypeOfAction.FLY, hero2);
+        hero1.addHabit(habit);
+        hero2.flyWithSomebody(hero1, TypeOfHolder.NECK, houseOfHero2);
+        hero1.getHeart().notSkipABeat(habit, "выполнялось действие " + TypeOfAction.FLY.getType() + " (существо - " + hero2.getName() + ", объект - высь" + ")");
+        hero2.stopFlying();
+        territory.describeTerritory(time);
+        territory.describeGlow();
+        territory.describeTwilight();
+        Reflection reflection1 = new Reflection(territory.getInformation(), territory.getWaterObject(0), territory.getTwilight());
+        Reflection reflection2 = new Reflection(territory.getSky().getInformation(), territory.getWaterObject(0), territory.getTwilight());
+        reflection1.showReflection();
+        reflection2.showReflection();
+        Celebration birthday = new Celebration(hero1, hero2, houseOfHero2);
+        birthday.celebrateTogether(time);
+        hero1.setWantToAdmire(true);
+        hero2.setWantToAdmire(false);
+        territory.getSky().changeColor();
+        birthday.admireTogether(territory.getSky().showChangeColor());
+        birthday.sitTogether("на крылечке");
+        FoodAndDrinks drink = new FoodAndDrinks (Meal.DRINKS.getMeal());
+        birthday.eatTogether(food1);
+        birthday.drinkTogether(drink);
+        hero1.setFact(Day.EVENING.getTimeOfDay(), "другой " + Day.EVENING.getTimeOfDay(), "не похож на");
+        hero2.setFact(food1, food2, "не похожи на");
+        birthday.realizeTogether();
+        hero1.setFact(houseOfHero2, someHouse, "не похож на");
+        System.out.println(hero1.realizeRelation() + ".");
+        room.setCharacteristics("уютная");
+        room.getInformation();
+        porch.getInformation();
+        houseOfHero2.setViewAround("удивительный");
+        houseOfHero2.showViewAround();
+        Things things = new Things(TypeOfThings.DIFFERENT, hero2, 100, DescriptionOfThings.SPECIAL);
+        hero2.canDoSomethingLikeAnimal("белка", TypeOfAction.TAKE, things);
+        houseOfHero2.addThings(things);
+        houseOfHero2.showDescriptionOfThings(0);
+        hero1.setFact(hero2.getName(), things.getName(), "раздобыл");
+        hero1.doNotKnowAboutRelation(hero1.getFact(), "где");
+        try {
+            walls.hangOnTheWalls(0, 90, TypeOfReason.FIND);
+        } catch (NotEnoughThingsException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+}
